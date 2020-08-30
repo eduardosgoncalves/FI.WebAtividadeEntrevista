@@ -1,0 +1,18 @@
+﻿IF EXISTS ( SELECT * 
+            FROM   sysobjects 
+            WHERE  id = object_id(N'[FI_SP_ConsBeneficiario]') 
+                   and OBJECTPROPERTY(id, N'IsProcedure') = 1 )
+BEGIN
+    DROP PROCEDURE [FI_SP_ConsBeneficiario]
+END
+GO
+
+CREATE PROC FI_SP_ConsBeneficiario
+	@ID BIGINT
+AS
+BEGIN
+	IF(ISNULL(@ID,0) = 0)
+		SELECT NOME, IDCLIENTE, CPF, ID FROM BENEFICIARIOS WITH(NOLOCK)
+	ELSE
+		SELECT NOME, IDCLIENTE, CPF, ID FROM BENEFICIARIOS WITH(NOLOCK) WHERE ID = @ID
+END
